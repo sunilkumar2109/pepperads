@@ -8,6 +8,10 @@ const EditMicroGuides = () => {
 
   useEffect(() => {
 /*************  ✨ Windsurf Command ⭐  *************/
+  /**
+   * Fetches the resource center page content from Firestore.
+   * Sets the `data` state to the fetched content if it exists.
+   */
 /*******  ae443c22-a502-4e88-84f5-cb5eda9887b7  *******/
     const fetchData = async () => {
       const docRef = doc(db, 'pageContent', 'resourceCenter');

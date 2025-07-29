@@ -34,7 +34,7 @@ const Dashboard = () => {
 </Link>
 
 <Link
-  to="edit-micro-guides"
+  to="/edit-micro-guides"
   className="block px-4 py-2 rounded hover:bg-[#2a2a2a] transition"
 >
   📚 Edit Resource Center

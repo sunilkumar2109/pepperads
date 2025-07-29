@@ -1,13 +1,82 @@
-import React, { useState } from 'react';
+// src/components/Login.jsx
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  OAuthProvider
+} from 'firebase/auth';
+import { auth } from '../firebase';
+import { useAuth } from '../contexts/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { user, loading } = useAuth();
+
+  // Email & password login
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError(null);
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      localStorage.setItem('userEmail', userCredential.user.email);
+      alert('Login successful!');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  // Google login
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      localStorage.setItem('userEmail', user.email);
+      navigate('/');
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  // Microsoft login
+  const handleMicrosoftLogin = async () => {
+    const provider = new OAuthProvider('microsoft.com');
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      localStorage.setItem('userEmail', user.email);
+      navigate('/');
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  // Apple login
+  const handleAppleLogin = async () => {
+    const provider = new OAuthProvider('apple.com');
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      localStorage.setItem('userEmail', user.email);
+      navigate('/');
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  useEffect(() => {
+    if (!loading && user) {
+      navigate('/');
+    }
+  }, [user, loading, navigate]);
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4 relative">
-      {/* Logo outside the card */}
       <div className="mb-6">
         <img
           src="https://i.postimg.cc/qMm2RWb3/pepperads-logo-removebg-preview.png"
@@ -16,7 +85,6 @@ const Login = () => {
         />
       </div>
 
-      {/* Glassmorphic login box */}
       <div className="w-full max-w-md backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-lg p-8">
         <div className="text-center mb-6">
           <p className="text-white">
@@ -34,25 +102,38 @@ const Login = () => {
           <h1 className="text-3xl font-bold text-white mb-2">Log in</h1>
           <p className="text-gray-300 mb-8">Welcome back! Please enter your details.</p>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleLogin}>
             <div>
-              <label className="block text-sm font-medium text-white mb-1">
-                Email address
-              </label>
+              <label className="block text-sm font-medium text-white mb-1">Email address</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3 py-2 bg-white/10 text-white placeholder-gray-400 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E31B23] focus:border-transparent"
                 placeholder="Enter your email"
+                required
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-white mb-1">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2 bg-white/10 text-white placeholder-gray-400 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E31B23] focus:border-transparent"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+
+            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <button
               type="submit"
               className="w-full bg-[#E31B23] text-white py-3 rounded-lg font-medium hover:bg-[#C41820] transition-colors"
+              disabled={loading}
             >
-              Next
+              {loading ? 'Loading...' : 'Next'}
             </button>
           </form>
 
@@ -67,13 +148,22 @@ const Login = () => {
             </div>
 
             <div className="mt-6 grid grid-cols-3 gap-3">
-              <button className="flex items-center justify-center px-4 py-2 border border-white/30 bg-white/10 rounded-lg hover:bg-white/20 transition-colors">
+              <button
+                onClick={handleGoogleLogin}
+                className="flex items-center justify-center px-4 py-2 border border-white/30 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+              >
                 <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
               </button>
-              <button className="flex items-center justify-center px-4 py-2 border border-white/30 bg-white/10 rounded-lg hover:bg-white/20 transition-colors">
+              <button
+                onClick={handleMicrosoftLogin}
+                className="flex items-center justify-center px-4 py-2 border border-white/30 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+              >
                 <img src="https://www.microsoft.com/favicon.ico" alt="Microsoft" className="w-5 h-5" />
               </button>
-              <button className="flex items-center justify-center px-4 py-2 border border-white/30 bg-white/10 rounded-lg hover:bg-white/20 transition-colors">
+              <button
+                onClick={handleAppleLogin}
+                className="flex items-center justify-center px-4 py-2 border border-white/30 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+              >
                 <img src="https://www.apple.com/favicon.ico" alt="Apple" className="w-5 h-5" />
               </button>
             </div>

@@ -8,22 +8,21 @@ const HelpCentre = () => {
         {/* Hero Section */}
         <div className="flex flex-col items-center mb-16">
           <h2 className="text-5xl font-bold text-white mb-8 text-center">Help Centre</h2>
-          
+
           {/* Large Centered Image */}
-          <div className="w-full max-w-4xl h-[500px] rounded-2xl overflow-hidden mb-12 shadow-2xl ml-24">
+          <div className="w-full max-w-4xl h-[500px] rounded-2xl overflow-hidden mb-12 shadow-2xl mx-auto">
             <img 
               src="https://i.postimg.cc/sgTGhMSX/help-centre.png" 
               alt="Customer support team" 
               className="w-full h-full object-cover object-center"
             />
           </div>
-          
+
           <p className="text-gray-300 text-xl text-center max-w-3xl leading-relaxed">
             Our dedicated support team is ready to assist you with any questions or issues you may have.
             Reach out through the form below or explore our other help options.
           </p>
         </div>
-
         {/* Form Section */}
         <div className="mb-24">
           <div className="text-center mb-12">

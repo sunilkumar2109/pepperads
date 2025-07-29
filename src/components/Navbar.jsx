@@ -1,10 +1,26 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
+import { useAuth } from '../contexts/AuthContext'; 
 const Navbar = () => {
   const [featuresOpen, setFeaturesOpen] = useState(false);
   const [howItWorksOpen, setHowItWorksOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
+  const { user } = useAuth();
+
+const handleLogout = async () => {
+  try {
+    await signOut(auth);
+    localStorage.removeItem('userEmail');
+    alert('Logged out successfully!');
+  } catch (error) {
+    console.error('Logout error:', error);
+    alert('Failed to logout. Try again.');
+  }
+};
+
   
   return (
     <nav className="bg-black py-1 fixed w-full top-0 z-50 border-b border-gray-800">
@@ -105,12 +121,24 @@ const Navbar = () => {
           <a href="/help-centre" className="text-white hover:text-[#E31B23] text-lg transition-colors">
             Help Centre
           </a>
+          <Link to="/pricing" className="text-white hover:text-[#E31B23] text-lg transition-colors">
+             Pricing
+          </Link>
           
           <Link to="/login">
   <button className="bg-[#E31B23] hover:bg-red-700 text-white px-5 py-2 rounded-md text-lg transition">
     Get Started
   </button>
 </Link>
+{user && (
+  <button
+    onClick={handleLogout}
+    className="bg-gray-800 hover:bg-gray-700 text-white px-5 py-2 rounded-md text-lg transition"
+  >
+    Logout
+  </button>
+)}
+
         </div>
 
         {/* Mobile menu button could go here */}

@@ -58,6 +58,9 @@ import EditProcessOverview from "./editPages/EditProcessOverview";
 import EditPdfDemo from './editPages/EditPdfDemo';
 import EditAipromo from './editPages/EditAipromo';
 import EditMicroGuides from './editPages/EditMicroGuides';
+import Landing1 from './pages/Landing1';
+import Landing2 from './pages/Landing2';
+import Pricing from './pages/Pricing';
 const HomePage = () => <Hero />;
 const FeaturesPage = () => <Features />;
 const ExamplesPage = () => <FeaturesExamples />;
@@ -75,6 +78,7 @@ const App = () => {
         <Layout>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            
             <Route path="/features/*" element={<FeaturesPage />} />
             <Route path="/featuresexample/*" element={<ExamplesPage />} />
             <Route path="/processoverview" element={<HowItWorksPage />} />
@@ -124,10 +128,12 @@ const App = () => {
             <Route path='/grow-revenue'   element={<SurveyRevenuePage />} />
             <Route path="/manage-features" element={<ManageFeatures />} />
             <Route path="/edit-process-overview" element={<EditProcessOverview />} />
-            
+            <Route path="/landing1" element={<Landing1 />} />
+            <Route path="/landing2" element={<Landing2 />} />
             <Route path="/edit-pdf-demo" element={<EditPdfDemo />} />
             <Route path="/edit-ai-promo" element={<EditAipromo />} />
             <Route path="/edit-micro-guides" element={<EditMicroGuides />} />
+            <Route path="/pricing" element={<Pricing />} />
            
        
            {/* Public Routes */}

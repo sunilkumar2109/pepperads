@@ -1,105 +1,100 @@
-import React, { useState } from "react";
-import { X, Send } from "lucide-react";
+import React from 'react';
+import { FileText, Brain, PenTool, BarChart3, Palette, Users, Rocket } from 'lucide-react';
 
-const AIChatWidget = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { sender: "bot", text: "👋 Hey there! How can I help you today?" }
-  ]);
-  const [input, setInput] = useState("");
-
-  const apiKey = "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";
-
-  const sendMessage = async () => {
-    if (!input.trim()) return;
-
-    const newMessages = [...messages, { sender: "user", text: input }];
-    setMessages(newMessages);
-    setInput("");
-
-    try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: [
-            { role: "system", content: "You are PepperAds Assistant. Be friendly and helpful." },
-            ...newMessages.map((msg) => ({
-              role: msg.sender === "user" ? "user" : "assistant",
-              content: msg.text
-            }))
-          ]
-        })
-      });
-
-      const data = await response.json();
-      const reply = data?.choices?.[0]?.message?.content || "Sorry, I didn't get that.";
-      setMessages((prev) => [...prev, { sender: "bot", text: reply }]);
-    } catch (error) {
-      setMessages((prev) => [...prev, { sender: "bot", text: "⚠️ Error talking to AI." }]);
+const ActiveFeatures = () => {
+  const currentFeatures = [
+    {
+      icon: <Brain className="h-8 w-8 text-[#E31B23]" />,
+      title: "Build From Scratch",
+      description: "Drag-and-drop form builder – clean, fast, no coding."
+    },
+    {
+      icon: <FileText className="h-8 w-8 text-[#E31B23]" />,
+      title: "Upload Your Own PDFs",
+      description: "Convert and edit survey PDFs directly."
+    },
+    {
+      icon: <PenTool className="h-8 w-8 text-[#E31B23]" />,
+      title: "Edit Existing Surveys",
+      description: "Real-time updates, collaborative editing, export options."
     }
-  };
+  ];
+
+  const upcomingFeatures = [
+    {
+      icon: <Rocket className="h-8 w-8 text-[#E31B23]" />,
+      title: "Logic & Branching Rules",
+      description: "Set skip logic, scoring, or conditional flows — effortlessly."
+    },
+    {
+      icon: <BarChart3 className="h-8 w-8 text-[#E31B23]" />,
+      title: "Response Analytics Dashboard",
+      description: "Track responses, see visual insights, and download reports."
+    },
+    {
+      icon: <Palette className="h-8 w-8 text-[#E31B23]" />,
+      title: "Custom Branding Tools",
+      description: "Add logos, fonts, color themes to forms and PDFs."
+    }
+  ];
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 font-sans">
-      {!isOpen ? (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="w-14 h-14 rounded-full bg-red-500 text-white text-2xl border-2 border-white shadow-lg flex items-center justify-center"
-        >
-          💬
-        </button>
-      ) : (
-        <div className="w-80 bg-[#111] text-white border border-red-500 rounded-lg shadow-xl flex flex-col overflow-hidden">
-          {/* Header */}
-          <div className="flex justify-between items-center px-4 py-3 bg-[#1a1a1a] border-b border-[#222] font-semibold text-sm">
-            <span>PepperAds Assistant</span>
-            <button onClick={() => setIsOpen(false)} className="text-white hover:text-red-400">
-              <X size={18} />
-            </button>
-          </div>
-
-          {/* Messages */}
-          <div className="flex flex-col gap-2 px-4 py-3 h-80 overflow-y-auto bg-[#111] text-sm">
-            {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`px-4 py-2 rounded-xl max-w-[75%] break-words ${
-                  msg.sender === "user"
-                    ? "bg-red-500 text-white self-end rounded-br-none"
-                    : "bg-[#333] text-white self-start rounded-bl-none"
-                }`}
+    <section className="py-20 px-4 bg-[#1A1A1A] relative overflow-hidden">
+      {/* Background gradient elements for glassmorphism effect */}
+      <div className="absolute top-40 left-20 w-96 h-96 bg-[#E31B23] opacity-10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-40 right-20 w-80 h-80 bg-[#E31B23] opacity-5 rounded-full blur-3xl"></div>
+      
+      <div className="container mx-auto max-w-6xl relative z-10">
+        <h2 className="section-title text-center text-white text-3xl font-bold mb-16">
+          What's Working Now vs What's Launching Next
+        </h2>
+        
+        {/* Current Features Section */}
+        <div className="mb-20">
+          <h3 className="text-2xl font-bold mb-8 flex items-center justify-center text-white">
+            <span className="text-[#E31B23] mr-2">✓</span> You Can Already Use
+          </h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {currentFeatures.map((feature, index) => (
+              <div 
+                key={index} 
+                className="bg-white bg-opacity-5 backdrop-blur-sm border border-white border-opacity-10 rounded-xl p-6 aspect-square flex flex-col items-center justify-center text-center shadow-lg cursor-pointer transform transition-all duration-300 hover:scale-105 hover:border-[#E31B23] hover:bg-opacity-10 hover:shadow-xl hover:shadow-[#E31B23]/10"
+                style={{ backdropFilter: 'blur(10px)' }}
               >
-                {msg.text}
+                <div className="p-4 bg-[#E31B23] bg-opacity-10 rounded-full mb-6 transform transition-all duration-300 group-hover:bg-opacity-20">
+                  {feature.icon}
+                </div>
+                <h4 className="text-xl font-semibold mb-3 text-white transition-colors duration-300 hover:text-[#E31B23]">{feature.title}</h4>
+                <p className="text-gray-400">{feature.description}</p>
               </div>
             ))}
           </div>
-
-          {/* Input */}
-          <div className="flex items-center px-3 py-2 border-t border-[#222] bg-[#111]">
-            <input
-              type="text"
-              placeholder="Type your message..."
-              className="flex-1 px-3 py-2 bg-[#1f1f1f] text-white rounded-md text-sm border-none outline-none"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-            />
-            <button
-              onClick={sendMessage}
-              className="ml-2 p-2 rounded-md bg-red-500 text-white hover:bg-red-600"
-            >
-              <Send size={16} />
-            </button>
+        </div>
+        
+        {/* Upcoming Features Section */}
+        <div>
+          <h3 className="text-2xl font-bold mb-8 flex items-center justify-center text-white">
+            <Rocket className="text-[#E31B23] mr-2 h-6 w-6" /> Coming Very Soon
+          </h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {upcomingFeatures.map((feature, index) => (
+              <div 
+                key={index}
+                className="bg-white bg-opacity-5 backdrop-blur-sm border border-white border-opacity-10 rounded-xl p-6 aspect-square flex flex-col items-center justify-center text-center shadow-lg cursor-pointer transform transition-all duration-300 hover:scale-105 hover:border-[#E31B23] hover:bg-opacity-10 hover:shadow-xl hover:shadow-[#E31B23]/10"
+                style={{ backdropFilter: 'blur(10px)' }}
+              >
+                <div className="p-4 bg-[#E31B23] bg-opacity-10 rounded-full mb-6 transform transition-all duration-300 group-hover:bg-opacity-20">
+                  {feature.icon}
+                </div>
+                <h4 className="text-xl font-semibold mb-3 text-white transition-colors duration-300 hover:text-[#E31B23]">{feature.title}</h4>
+                <p className="text-gray-400">{feature.description}</p>
+              </div>
+            ))}
           </div>
         </div>
-      )}
-    </div>
+      </div>
+    </section>
   );
 };
 
-export default AIChatWidget;
+export default ActiveFeatures;

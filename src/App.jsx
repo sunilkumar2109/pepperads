@@ -16,6 +16,7 @@ import OurVision from './pages/OurVision';
 import Careers from './pages/Careers';
 import Login from './components/Login';
 import Signup from './components/Signup';
+
 import Blog from './pages/Blog';
 import HelpSupport from './pages/HelpSupport';
 import ContactUs from './pages/ContactUs';
@@ -61,6 +62,11 @@ import EditMicroGuides from './editPages/EditMicroGuides';
 import Landing1 from './pages/Landing1';
 import Landing2 from './pages/Landing2';
 import Pricing from './pages/Pricing';
+import CaseStudies from './pages/CaseStudies';
+import AIChatWidget from './components/AIChatWidget';
+import NotFound from './pages/NotFound';
+import Termandcon from './pages/termandcon';
+
 const HomePage = () => <Hero />;
 const FeaturesPage = () => <Features />;
 const ExamplesPage = () => <FeaturesExamples />;
@@ -134,6 +140,10 @@ const App = () => {
             <Route path="/edit-ai-promo" element={<EditAipromo />} />
             <Route path="/edit-micro-guides" element={<EditMicroGuides />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/CaseStudies" element={<CaseStudies/>} />
+            <Route path="/AIChatWidget" element={<AIChatWidget/>} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/termandcon" element={<Termandcon/>} />
            
        
            {/* Public Routes */}

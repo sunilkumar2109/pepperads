@@ -9,26 +9,26 @@ const SurveyMonetization = () => {
           Survey <span className="text-red-400">Monetization</span>
         </h1>
         <p className="text-center text-gray-400 text-lg mb-12">
-          Turn engagement into earnings — from funnels to partner dashboards and beyond.
+          Turn every survey into a revenue engine — From optimized funnels to real-time dashboards, unlock the full earning potential of your audience engagement.
         </p>
 
         <div className="grid md:grid-cols-2 gap-10">
           {[
             {
-              title: "Offer Selection",
-              desc: "Choose offers that match your audience for better conversion and user satisfaction."
+              title: "Smart Offer Matching",
+              desc: "Serve the right offers to the right users. Match your audience with high-converting surveys and campaigns for better ROI and user satisfaction."
             },
             {
-              title: "Dashboard & Pepeleads",
-              desc: "Track your traffic, conversions, and payouts in real time using our performance dashboard."
+              title: "Real-Time Dashboard & Pepeleads",
+              desc: "Monitor traffic, conversions, and earnings effortlessly. Our intuitive dashboard gives you full visibility into performance across campaigns."
             },
             {
-              title: "Funnels That Work",
-              desc: "Structure quiz and feedback flows that boost retention and drive qualified traffic."
+              title: " Funnels That Convert",
+              desc: "Build survey flows that guide users seamlessly—from initial click to qualified action. Retain interest and drive quality traffic every step of the way."
             },
             {
               title: "Automation & Rewards",
-              desc: "Use automated systems to reward users post-submission and increase return visits."
+              desc: "Reward your audience instantly after survey completion. Set up automated incentives that encourage repeat engagement and boost retention."
             }
           ].map((card, i) => (
             <div key={i} className="bg-[#111] rounded-xl p-6 hover:shadow-green-500/30 transition-shadow shadow-md">

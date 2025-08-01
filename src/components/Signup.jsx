@@ -14,6 +14,20 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // Common function to send welcome email
+  const sendWelcomeEmail = (email) => {
+    fetch('http://localhost:5000/send-welcome', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Email failed');
+        console.log('✅ Welcome email sent');
+      })
+      .catch((err) => console.error('❌ Email error:', err));
+  };
+
   // Email/password signup
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -28,6 +42,8 @@ const Signup = () => {
 
       localStorage.setItem('userEmail', user.email);
       alert('Thank you for your interest. Someone from our team will contact you shortly');
+
+      sendWelcomeEmail(user.email);
       navigate('/');
     } catch (error) {
       alert(error.message);
@@ -47,6 +63,7 @@ const Signup = () => {
       });
 
       localStorage.setItem('userEmail', user.email);
+      sendWelcomeEmail(user.email);
       navigate('/');
     } catch (error) {
       alert(error.message);
@@ -66,6 +83,7 @@ const Signup = () => {
       });
 
       localStorage.setItem('userEmail', user.email);
+      sendWelcomeEmail(user.email);
       navigate('/');
     } catch (error) {
       alert(error.message);
@@ -85,6 +103,7 @@ const Signup = () => {
       });
 
       localStorage.setItem('userEmail', user.email);
+      sendWelcomeEmail(user.email);
       navigate('/');
     } catch (error) {
       alert(error.message);
